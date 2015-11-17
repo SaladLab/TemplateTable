@@ -13,8 +13,14 @@ namespace TemplateTable
 
     public interface ITemplateTable<TKey> : ITemplateTable, IEnumerable
     {
-        object GetValue(TKey id);
+        object TryGetValue(TKey id);
         bool ContainsKey(TKey id);
         IEnumerable<TKey> GetKeyEnumerable();
+    }
+
+    public interface ITemplateTableLoader<TKey, TValue>
+        where TValue : class, new()
+    {
+        IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> Load();
     }
 }

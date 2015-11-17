@@ -5,23 +5,19 @@ using System.Collections.Generic;
 
 namespace TemplateTable
 {
-    public enum KeyNotFoundMode
-    {
-        ThrowException,
-        ReturnGhostValue,
-    }
-
     public class TemplateTable<TKey, TValue> : ITemplateTable<TKey>, IEnumerable<TValue>
         where TValue : class, new()
     {
-        private struct ValueData
+        public class ValueData
         {
             public TValue Value;
-            public bool IsLoaded;
+            public Func<TKey, TValue> LazyLoader;
         }
 
-        private readonly ConcurrentDictionary<TKey, ValueData> _table = new ConcurrentDictionary<TKey, ValueData>();
-        private readonly KeyNotFoundMode _keyNotFoundMode = KeyNotFoundMode.ThrowException;
+        private ConcurrentDictionary<TKey, ValueData> _table = new ConcurrentDictionary<TKey, ValueData>();
+        private ConcurrentDictionary<TKey, TValue> _ghostTable = new ConcurrentDictionary<TKey, TValue>();
+
+        public Func<TKey, TValue> GhostValueFactory = null;
 
         // TODO: inexistent key
         // TODO: delayed loading
@@ -34,14 +30,29 @@ namespace TemplateTable
 
         public int Count => _table.Count;
 
-        public TValue Get(TKey id)
+        public TValue TryGet(TKey id)
         {
-            return null;
+            ValueData data;
+            if (_table.TryGetValue(id, out data) == false)
+                return null;
+
+            return data.Value ?? LoadLazyValue(id, data);
         }
 
-        public object GetValue(TKey id)
+        private TValue LoadLazyValue(TKey id, ValueData data)
         {
-            return null;
+            var lazyLoader = data.LazyLoader;
+            if (lazyLoader != null)
+            {
+                data.Value = data.LazyLoader(id);
+                data.LazyLoader = null;
+            }
+            return data.Value;
+        }
+
+        public object TryGetValue(TKey id)
+        {
+            return TryGet(id);
         }
 
         public bool ContainsKey(TKey id)
@@ -53,41 +64,70 @@ namespace TemplateTable
         {
             get
             {
-                var value = Get(id);
+                var value = TryGet(id);
                 if (value != null)
                     return value;
 
-                if (_keyNotFoundMode == KeyNotFoundMode.ThrowException)
-                    throw new KeyNotFoundException("Unknown key: " + id);
+                if (GhostValueFactory == null)
+                    throw new KeyNotFoundException("KeyNotFound: " + id);
 
-                return default(TValue); // TODO: ghost value
+                return _ghostTable.GetOrAdd(id, GhostValueFactory);
             }
-            set { }
         }
 
         public IEnumerable<TKey> GetKeyEnumerable()
         {
-            foreach (var pair in _table)
+            foreach (var i in _table)
             {
-                yield return pair.Key;
+                yield return i.Key;
             }
         }
 
         public IEnumerator<TValue> GetEnumerator()
         {
-            foreach (var pair in _table)
+            foreach (var i in _table)
             {
-                // TODO: handle delayed load
-                yield return pair.Value.Value;
+                yield return i.Value.Value ?? LoadLazyValue(i.Key, i.Value);
             }
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (var pair in _table)
+            foreach (var i in _table)
             {
-                // TODO: handle delayed load
-                yield return pair.Value.Value;
+                yield return i.Value.Value ?? LoadLazyValue(i.Key, i.Value);
+            }
+        }
+
+        public void Load(ITemplateTableLoader<TKey, TValue> loader)
+        {
+            var table = new ConcurrentDictionary<TKey, ValueData>();
+
+            foreach (var i in loader.Load())
+            {
+                bool added;
+
+                if (i.Value.Item1 != null)
+                    added = table.TryAdd(i.Key, new ValueData { Value = i.Value.Item1 });
+                else
+                    added = table.TryAdd(i.Key, new ValueData { LazyLoader = i.Value.Item2 });
+
+                if (added == false)
+                    throw new InvalidOperationException("Duplicate Key: " + i.Key);
+            }
+
+            _table = table;
+            _ghostTable = new ConcurrentDictionary<TKey, TValue>();
+        }
+
+        public void Patch(ITemplateTableLoader<TKey, TValue> loader)
+        {
+            foreach (var i in loader.Load())
+            {
+                if (i.Value.Item1 != null)
+                    _table[i.Key] = new ValueData { Value = i.Value.Item1 };
+                else
+                    _table[i.Key] = new ValueData { LazyLoader = i.Value.Item2 };
             }
         }
     }
