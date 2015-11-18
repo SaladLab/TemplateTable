@@ -61,6 +61,9 @@
     <Compile Include="..\TemplateTable\ITemplateTable.cs">
       <Link>ITemplateTable.cs</Link>
     </Compile>
+    <Compile Include="..\TemplateTable\ITemplateTableLoader.cs">
+      <Link>ITemplateTableLoader.cs</Link>
+    </Compile>
     <Compile Include="..\TemplateTable\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>

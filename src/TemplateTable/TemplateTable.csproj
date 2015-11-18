@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ITemplateTable.cs" />
+    <Compile Include="ITemplateTableLoader.cs" />
     <Compile Include="StreamGenericHelper.cs" />
     <Compile Include="TemplateTable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
