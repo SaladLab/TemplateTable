@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace TemplateTable
 {
-    public class TemplateTable<TKey, TValue> : ITemplateTable<TKey>, IEnumerable<TValue>
+    public class TemplateTable<TKey, TValue> : ITemplateTable<TKey>, IEnumerable<KeyValuePair<TKey, TValue>>
         where TValue : class, new()
     {
         public class ValueData
@@ -83,7 +83,7 @@ namespace TemplateTable
             }
         }
 
-        public IEnumerator<TValue> GetEnumerator()
+        public IEnumerable<TValue> GetValueEnumerable()
         {
             foreach (var i in _table)
             {
@@ -91,11 +91,21 @@ namespace TemplateTable
             }
         }
 
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            foreach (var i in _table)
+            {
+                yield return new KeyValuePair<TKey, TValue>(
+                    i.Key,
+                    i.Value.Value ?? LoadLazyValue(i.Key, i.Value));
+            }
+        }
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             foreach (var i in _table)
             {
-                yield return i.Value.Value ?? LoadLazyValue(i.Key, i.Value);
+                yield return i;
             }
         }
 

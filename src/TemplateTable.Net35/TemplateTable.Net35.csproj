@@ -64,17 +64,29 @@
     <Compile Include="..\TemplateTable\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\TemplateTable\StreamGenericHelper.cs">
+      <Link>StreamGenericHelper.cs</Link>
+    </Compile>
     <Compile Include="..\TemplateTable\TemplateTable.cs">
       <Link>TemplateTable.cs</Link>
     </Compile>
     <Compile Include="..\TemplateTable\TemplateTableBsonPackLoader.cs">
       <Link>TemplateTableBsonPackLoader.cs</Link>
     </Compile>
+    <Compile Include="..\TemplateTable\TemplateTableBsonPackSaver.cs">
+      <Link>TemplateTableBsonPackSaver.cs</Link>
+    </Compile>
     <Compile Include="..\TemplateTable\TemplateTableJsonLoader.cs">
       <Link>TemplateTableJsonLoader.cs</Link>
     </Compile>
+    <Compile Include="..\TemplateTable\TemplateTableJsonSaver.cs">
+      <Link>TemplateTableJsonSaver.cs</Link>
+    </Compile>
     <Compile Include="..\TemplateTable\TemplateTableProtobufPackLoader.cs">
       <Link>TemplateTableProtobufPackLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\TemplateTable\TemplateTableProtobufPackSaver.cs">
+      <Link>TemplateTableProtobufPackSaver.cs</Link>
     </Compile>
   </ItemGroup>
   <ItemGroup>

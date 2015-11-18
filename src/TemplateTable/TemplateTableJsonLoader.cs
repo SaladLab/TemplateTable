@@ -9,9 +9,9 @@ namespace TemplateTable
     public class TemplateTableJsonLoader<TKey, TValue> : ITemplateTableLoader<TKey, TValue>
         where TValue : class, new()
     {
-        private JsonReader _jsonReader;
-        private JsonSerializer _serializer;
-        private bool _delayedLoad;
+        private readonly JsonReader _jsonReader;
+        private readonly JsonSerializer _serializer;
+        private readonly bool _delayedLoad;
 
         public TemplateTableJsonLoader(string json, bool delayedLoad)
         {

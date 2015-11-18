@@ -9,9 +9,16 @@ namespace TemplateTable
     public class TemplateTableBsonPackLoader<TKey, TValue> : ITemplateTableLoader<TKey, TValue>
         where TValue : class, new()
     {
-        private Stream _stream;
-        private JsonSerializer _serializer;
-        private bool _delayedLoad;
+        private readonly Stream _stream;
+        private readonly JsonSerializer _serializer;
+        private readonly bool _delayedLoad;
+
+        public TemplateTableBsonPackLoader(Stream stream, bool delayLoad)
+        {
+            _stream = stream;
+            _serializer = new JsonSerializer();
+            _delayedLoad = delayLoad;
+        }
 
         public TemplateTableBsonPackLoader(Stream stream, JsonSerializer serializer, bool delayLoad)
         {
@@ -30,8 +37,7 @@ namespace TemplateTable
             TKey[] keys;
             int[] valueLengths;
             byte[] valueBuf;
-            if (LoadPackHeader(_stream, out keys, out valueLengths, out valueBuf) == false)
-                throw new FormatException("LoadPackHeader failed.");
+            LoadHeader(_stream, out keys, out valueLengths, out valueBuf);
 
             var valueBufOffset = 0;
             for (var i = 0; i < keys.Length; i++)
@@ -56,8 +62,7 @@ namespace TemplateTable
             TKey[] keys;
             int[] valueLengths;
             byte[] valueBuf;
-            if (LoadPackHeader(_stream, out keys, out valueLengths, out valueBuf) == false)
-                throw new FormatException("LoadPackHeader failed.");
+            LoadHeader(_stream, out keys, out valueLengths, out valueBuf);
 
             var valueBufOffset = 0;
             for (var i = 0; i < keys.Length; i++)
@@ -79,10 +84,12 @@ namespace TemplateTable
             }
         }
 
-        private bool LoadPackHeader(Stream stream, out TKey[] keys, out int[] valueLengths, out byte[] valueBuf)
+        private void LoadHeader(Stream stream, out TKey[] keys, out int[] valueLengths, out byte[] valueBuf)
         {
-            var dtblBuf = new byte[4];
-            stream.Read(dtblBuf, 0, 4);
+            var sigBuf = new byte[4];
+            stream.Read(sigBuf, 0, 4);
+            if (sigBuf[0] != 0x54 || sigBuf[1] != 0x42 || sigBuf[2] != 0x50 || sigBuf[3] != 0x31)
+                throw new FormatException("Signature mismatch");
 
             var countBuf = new byte[4];
             stream.Read(countBuf, 0, 4);
@@ -118,30 +125,6 @@ namespace TemplateTable
 
             valueBuf = new byte[valueBufSize];
             stream.Read(valueBuf, 0, valueBufSize);
-            return true;
-        }
-    }
-
-    public static class StreamGenericHelper
-    {
-        public static T Read<T>(BinaryReader reader)
-        {
-            if (typeof(T) == typeof(int))
-                return (T)(object)reader.ReadInt32();
-            else if (typeof(T) == typeof(string))
-                return (T)(object)reader.ReadString();
-            else
-                throw new NotSupportedException();
-        }
-
-        public static void Write<T>(BinaryWriter writer, T value)
-        {
-            if (value is int)
-                writer.Write((int)(object)value);
-            else if (value is string)
-                writer.Write((string)(object)value);
-            else
-                throw new NotSupportedException();
         }
     }
 }
