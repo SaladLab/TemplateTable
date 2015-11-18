@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace TemplateTable
 {
@@ -59,10 +59,9 @@ namespace TemplateTable
                 var key = idToken.Value.ToObject<TKey>();
                 yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
                     key,
-                    Tuple.Create<TValue, Func<TKey, TValue>>(null, _ =>
-                    {
-                        return _serializer.Deserialize<TValue>(new JTokenReader(child));
-                    }));
+                    Tuple.Create<TValue, Func<TKey, TValue>>(
+                        null,
+                        _ => _serializer.Deserialize<TValue>(new JTokenReader(child))));
             }
         }
     }

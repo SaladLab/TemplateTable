@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.Collections.Generic;
 using Xunit;
 
 namespace TemplateTable.Tests
@@ -19,9 +17,7 @@ namespace TemplateTable.Tests
         public void Test_GetNonExistentKey_ThrowException()
         {
             var table = new TemplateTable<int, TestObject>();
-            Assert.Throws<KeyNotFoundException>(() => {
-                var value = table[1];
-            });
+            Assert.Throws<KeyNotFoundException>(() => { var value = table[1]; });
         }
 
         [Fact]

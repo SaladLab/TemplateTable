@@ -1,7 +1,4 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.IO;
-using Xunit;
+﻿using Xunit;
 
 namespace TemplateTable.Tests
 {
@@ -42,7 +39,7 @@ namespace TemplateTable.Tests
             var jsonLoader = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.LoadJson, false);
             table.Load(jsonLoader);
             var jsonPatcher = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.PatchJson, false);
-            table.Patch(jsonPatcher);
+            table.Update(jsonPatcher);
             var value = table[2];
             Assert.Equal("TwoTwo", value.Name);
         }
@@ -54,7 +51,7 @@ namespace TemplateTable.Tests
             var jsonLoader = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.LoadJson, true);
             table.Load(jsonLoader);
             var jsonPatcher = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.PatchJson, true);
-            table.Patch(jsonPatcher);
+            table.Update(jsonPatcher);
             var value = table[2];
             Assert.Equal("TwoTwo", value.Name);
         }

@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Bson;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Bson;
 
 namespace TemplateTable
 {
@@ -79,7 +79,7 @@ namespace TemplateTable
                             using (var reader = new BsonReader(ms))
                             {
                                 return _serializer.Deserialize<TValue>(reader);
-                            };
+                            }
                         }));
             }
         }

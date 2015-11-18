@@ -14,15 +14,13 @@ namespace TemplateTable
             public Func<TKey, TValue> LazyLoader;
         }
 
-        private ConcurrentDictionary<TKey, ValueData> _table = new ConcurrentDictionary<TKey, ValueData>();
-        private ConcurrentDictionary<TKey, TValue> _ghostTable = new ConcurrentDictionary<TKey, TValue>();
+        private ConcurrentDictionary<TKey, ValueData> _table =
+            new ConcurrentDictionary<TKey, ValueData>();
+
+        private ConcurrentDictionary<TKey, TValue> _ghostTable =
+            new ConcurrentDictionary<TKey, TValue>();
 
         public Func<TKey, TValue> GhostValueFactory = null;
-
-        // TODO: inexistent key
-        // TODO: delayed loading
-        // TODO: patching
-        // TODO: Thread-safe
 
         public Type KeyType => typeof(TKey);
 
@@ -130,7 +128,7 @@ namespace TemplateTable
             _ghostTable = new ConcurrentDictionary<TKey, TValue>();
         }
 
-        public void Patch(ITemplateTableLoader<TKey, TValue> loader)
+        public void Update(ITemplateTableLoader<TKey, TValue> loader)
         {
             foreach (var i in loader.Load())
             {
