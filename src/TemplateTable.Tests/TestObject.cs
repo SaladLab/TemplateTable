@@ -1,7 +1,9 @@
-﻿using Xunit;
+﻿using ProtoBuf;
+using Xunit;
 
 namespace TemplateTable.Tests
 {
+    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class TestObject
     {
         public int Id;
