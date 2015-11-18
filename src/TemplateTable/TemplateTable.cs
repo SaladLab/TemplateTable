@@ -73,19 +73,25 @@ namespace TemplateTable
             }
         }
 
-        public IEnumerable<TKey> GetKeyEnumerable()
+        public IEnumerable<TKey> Keys
         {
-            foreach (var i in _table)
+            get
             {
-                yield return i.Key;
+                foreach (var i in _table)
+                {
+                    yield return i.Key;
+                }
             }
         }
 
-        public IEnumerable<TValue> GetValueEnumerable()
+        public IEnumerable<TValue> Values
         {
-            foreach (var i in _table)
+            get
             {
-                yield return i.Value.Value ?? LoadLazyValue(i.Key, i.Value);
+                foreach (var i in _table)
+                {
+                    yield return i.Value.Value ?? LoadLazyValue(i.Key, i.Value);
+                }
             }
         }
 

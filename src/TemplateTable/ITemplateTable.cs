@@ -15,6 +15,6 @@ namespace TemplateTable
     {
         object TryGetValue(TKey id);
         bool ContainsKey(TKey id);
-        IEnumerable<TKey> GetKeyEnumerable();
+        IEnumerable<TKey> Keys { get; }
     }
 }
