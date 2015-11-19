@@ -190,7 +190,18 @@ using (var file = File.Create("Table.bin"))
 
 ### Protobuf-pack
 
-With `TemplateTableProtobufPackLoader`, TemplateTable can load data from json protobuf-pack.
+For using protobuf-pack, related data classes should have a proper ProtoContractAttribute.
+
+```csharp
+[ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
+public class CardDescription
+{
+    public string Id;
+    // ...
+}
+```
+
+With `TemplateTableProtobufPackLoader`, TemplateTable can load data from protobuf-pack.
 
 ```csharp
 cardTable.Load(new TemplateTableProtobufPackLoader<string, CardDescription>(
