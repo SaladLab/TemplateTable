@@ -1,0 +1,2 @@
+CardTable.json from https://hearthstonejson.com/
+The JSON files contain data that is Copyright ¨Ï Blizzard Entertainment.

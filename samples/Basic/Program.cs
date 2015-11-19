@@ -1,16 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Basic
 {
     class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            // TODO: MAKE SAMPLE
+            Console.WriteLine("***** BasicUsage *****");
+            var basicUsage = new BasicUsage();
+            basicUsage.Run();
+            Console.WriteLine();
+
+            Console.WriteLine("***** Benchmark *****");
+            var benchmark = new Benchmark();
+            benchmark.Run();
+            Console.WriteLine();
         }
     }
 }

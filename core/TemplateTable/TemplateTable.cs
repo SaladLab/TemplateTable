@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace TemplateTable
 {
     public class TemplateTable<TKey, TValue> : ITemplateTable<TKey>, IEnumerable<KeyValuePair<TKey, TValue>>
+        where TKey : IComparable
         where TValue : class, new()
     {
         public class ValueData

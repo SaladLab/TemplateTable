@@ -7,6 +7,7 @@ using Newtonsoft.Json.Bson;
 namespace TemplateTable
 {
     public class TemplateTableBsonPackSaver<TKey, TValue>
+        where TKey : IComparable
         where TValue : class, new()
     {
         private readonly JsonSerializer _serializer;
@@ -32,7 +33,7 @@ namespace TemplateTable
         public void SaveTo(TemplateTable<TKey, TValue> table, Stream stream)
         {
             var items = table.ToList();
-            var values = items.Select(i => i.Value).ToList();
+            items.Sort((x, y) => x.Key.CompareTo(y.Key));
 
             // signature 'TBP1' (4 bytes)
 
@@ -40,7 +41,7 @@ namespace TemplateTable
 
             // count (4 bytes)
 
-            var countBuf = BitConverter.GetBytes(values.Count);
+            var countBuf = BitConverter.GetBytes(items.Count);
             stream.Write(countBuf, 0, countBuf.Length);
 
             // keys & values

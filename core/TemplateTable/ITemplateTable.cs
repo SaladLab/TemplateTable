@@ -12,6 +12,7 @@ namespace TemplateTable
     }
 
     public interface ITemplateTable<TKey> : ITemplateTable, IEnumerable
+        where TKey : IComparable
     {
         object TryGetValue(TKey id);
         bool ContainsKey(TKey id);

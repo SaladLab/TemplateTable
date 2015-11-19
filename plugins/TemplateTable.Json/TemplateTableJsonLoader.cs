@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 namespace TemplateTable
 {
     public class TemplateTableJsonLoader<TKey, TValue> : ITemplateTableLoader<TKey, TValue>
+        where TKey : IComparable
         where TValue : class, new()
     {
         private readonly JsonReader _jsonReader;

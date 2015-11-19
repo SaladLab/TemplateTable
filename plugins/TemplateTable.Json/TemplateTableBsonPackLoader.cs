@@ -7,6 +7,7 @@ using Newtonsoft.Json.Bson;
 namespace TemplateTable
 {
     public class TemplateTableBsonPackLoader<TKey, TValue> : ITemplateTableLoader<TKey, TValue>
+        where TKey : IComparable
         where TValue : class, new()
     {
         private readonly Stream _stream;

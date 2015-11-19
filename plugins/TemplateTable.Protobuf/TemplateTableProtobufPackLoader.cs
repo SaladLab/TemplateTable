@@ -6,6 +6,7 @@ using ProtoBuf.Meta;
 namespace TemplateTable
 {
     public class TemplateTableProtobufPackLoader<TKey, TValue> : ITemplateTableLoader<TKey, TValue>
+        where TKey : IComparable
         where TValue : class, new()
     {
         private readonly Stream _stream;
