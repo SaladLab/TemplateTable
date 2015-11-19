@@ -68,7 +68,7 @@ namespace TemplateTable
                     return value;
 
                 if (GhostValueFactory == null)
-                    throw new KeyNotFoundException("KeyNotFound: " + id);
+                    throw new KeyNotFoundException("Key: " + id);
 
                 return _ghostTable.GetOrAdd(id, GhostValueFactory);
             }
@@ -124,11 +124,13 @@ namespace TemplateTable
 
                 if (i.Value.Item1 != null)
                     added = table.TryAdd(i.Key, new ValueData { Value = i.Value.Item1 });
-                else
+                else if (i.Value.Item2 != null)
                     added = table.TryAdd(i.Key, new ValueData { LazyLoader = i.Value.Item2 });
+                else
+                    throw new InvalidOperationException("Empty:" + i.Key);
 
                 if (added == false)
-                    throw new InvalidOperationException("Duplicate Key: " + i.Key);
+                    throw new InvalidOperationException("Duplicate:" + i.Key);
             }
 
             _table = table;
@@ -140,9 +142,18 @@ namespace TemplateTable
             foreach (var i in loader.Load())
             {
                 if (i.Value.Item1 != null)
+                {
                     _table[i.Key] = new ValueData { Value = i.Value.Item1 };
-                else
+                }
+                else if (i.Value.Item2 != null)
+                {
                     _table[i.Key] = new ValueData { LazyLoader = i.Value.Item2 };
+                }
+                else
+                {
+                    ValueData data;
+                    _table.TryRemove(i.Key, out data);
+                }
             }
         }
     }

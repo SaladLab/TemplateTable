@@ -36,6 +36,7 @@ namespace Basic
         private void UseGhost()
         {
             _cardTable.GhostValueFactory = id => new CardDescription { Id = id, Name = "Ghost " };
+
             var card = _cardTable["GVG_200"];
             Console.WriteLine("Name: " + card.Name);
             Console.WriteLine("Text: " + card.Text);
