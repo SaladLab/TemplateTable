@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\AssemblyInfoGenerated.cs" />
     <Compile Include="StreamGenericHelper.cs" />
     <Compile Include="TemplateTableProtobufPackLoader.cs" />
     <Compile Include="TemplateTableProtobufPackSaver.cs" />
