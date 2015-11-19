@@ -1,8 +1,8 @@
-﻿using ProtoBuf;
+﻿using System;
+using System.Collections.Generic;
 
 namespace TemplateTable.Tests
 {
-    [ProtoContract(ImplicitFields = ImplicitFields.AllPublic)]
     public class TestObject
     {
         public int Id;

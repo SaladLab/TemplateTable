@@ -5,11 +5,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2E3DF5C2-8A38-4A03-86D7-8D463C917E47}</ProjectGuid>
+    <ProjectGuid>{E3C73176-0BBD-4DAA-A2AD-C0F8781FC325}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TemplateTable.Tests</RootNamespace>
-    <AssemblyName>TemplateTable.Tests</AssemblyName>
+    <RootNamespace>TemplateTable.Protobuf.Tests</RootNamespace>
+    <AssemblyName>TemplateTable.Protobuf.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -38,10 +38,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
       <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net40\protobuf-net.dll</HintPath>
       <Private>True</Private>
@@ -69,20 +65,21 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="TemplateTableBsonPackTest.cs" />
-    <Compile Include="TemplateTableJsonTest.cs" />
-    <Compile Include="TemplateTableProtobufPackTest.cs" />
-    <Compile Include="TemplateTableTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TemplateTableProtobufPackTest.cs" />
     <Compile Include="TestObject.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\TemplateTable\TemplateTable.csproj">
-      <Project>{9257e7a5-a007-42d1-996c-5feef51b0c36}</Project>
+    <ProjectReference Include="..\..\core\TemplateTable\TemplateTable.csproj">
+      <Project>{d58f2bb4-38be-4487-8943-5b3591490d85}</Project>
       <Name>TemplateTable</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TemplateTable.Protobuf\TemplateTable.Protobuf.csproj">
+      <Project>{63cfd976-2fe9-48bd-90f7-09b67f9b23c2}</Project>
+      <Name>TemplateTable.Protobuf</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

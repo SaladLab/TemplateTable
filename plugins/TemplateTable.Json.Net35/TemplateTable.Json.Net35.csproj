@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{52FB42E2-5417-4EBF-8171-020FEFF42BC9}</ProjectGuid>
+    <ProjectGuid>{FD974DB1-7002-4348-8129-FA1AD6B94D91}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TemplateTable</RootNamespace>
-    <AssemblyName>TemplateTable</AssemblyName>
+    <AssemblyName>TemplateTable.Json</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NET35</DefineConstants>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -25,29 +25,17 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;NET35</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NetLegacySupport.Action, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NetLegacySupport.Action.1.0.3\lib\net35\NetLegacySupport.Action.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="NetLegacySupport.ConcurrentDictionary, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NetLegacySupport.ConcurrentDictionary.1.0.2\lib\net35\NetLegacySupport.ConcurrentDictionary.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="NetLegacySupport.Tuple, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NetLegacySupport.Tuple.1.0.2\lib\net35\NetLegacySupport.Tuple.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net35\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="protobuf-net, Version=2.0.0.668, Culture=neutral, PublicKeyToken=257b51d87d2e4d67, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\protobuf-net.2.0.0.668\lib\net35\protobuf-net.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -58,39 +46,30 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\TemplateTable\ITemplateTable.cs">
-      <Link>ITemplateTable.cs</Link>
-    </Compile>
-    <Compile Include="..\TemplateTable\ITemplateTableLoader.cs">
-      <Link>ITemplateTableLoader.cs</Link>
-    </Compile>
-    <Compile Include="..\TemplateTable\Properties\AssemblyInfo.cs">
+    <Compile Include="..\TemplateTable.Json\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="..\TemplateTable\StreamGenericHelper.cs">
+    <Compile Include="..\TemplateTable.Json\StreamGenericHelper.cs">
       <Link>StreamGenericHelper.cs</Link>
     </Compile>
-    <Compile Include="..\TemplateTable\TemplateTable.cs">
-      <Link>TemplateTable.cs</Link>
-    </Compile>
-    <Compile Include="..\TemplateTable\TemplateTableBsonPackLoader.cs">
+    <Compile Include="..\TemplateTable.Json\TemplateTableBsonPackLoader.cs">
       <Link>TemplateTableBsonPackLoader.cs</Link>
     </Compile>
-    <Compile Include="..\TemplateTable\TemplateTableBsonPackSaver.cs">
+    <Compile Include="..\TemplateTable.Json\TemplateTableBsonPackSaver.cs">
       <Link>TemplateTableBsonPackSaver.cs</Link>
     </Compile>
-    <Compile Include="..\TemplateTable\TemplateTableJsonLoader.cs">
+    <Compile Include="..\TemplateTable.Json\TemplateTableJsonLoader.cs">
       <Link>TemplateTableJsonLoader.cs</Link>
     </Compile>
-    <Compile Include="..\TemplateTable\TemplateTableJsonSaver.cs">
+    <Compile Include="..\TemplateTable.Json\TemplateTableJsonSaver.cs">
       <Link>TemplateTableJsonSaver.cs</Link>
     </Compile>
-    <Compile Include="..\TemplateTable\TemplateTableProtobufPackLoader.cs">
-      <Link>TemplateTableProtobufPackLoader.cs</Link>
-    </Compile>
-    <Compile Include="..\TemplateTable\TemplateTableProtobufPackSaver.cs">
-      <Link>TemplateTableProtobufPackSaver.cs</Link>
-    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\core\TemplateTable.Net35\TemplateTable.Net35.csproj">
+      <Project>{74c8f709-ea3b-4bd5-9c4d-c4e692bbfc0f}</Project>
+      <Name>TemplateTable.Net35</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

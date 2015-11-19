@@ -8,8 +8,7 @@ namespace TemplateTable.Tests
         public TemplateTable<int, TestObject> PrepareTable()
         {
             var table = new TemplateTable<int, TestObject>();
-            var jsonLoader = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.LoadJson, false);
-            table.Load(jsonLoader);
+            table.Load(new TestObjectLoader());
             return table;
         }
 
