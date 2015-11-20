@@ -2,6 +2,14 @@
 
 TemplateTable provides simple dictionary with fast-loading and dynamic-updating.
 
+#### Where can I get it?
+
+```
+PM> Install-Package TemplateTable -pre
+PM> Install-Package TemplateTable.Json -pre
+PM> Install-Package TemplateTable.Protobuf -pre
+```
+
 ## Example
 
 Let's see an example. In this example, we will define card,
