@@ -14,4 +14,7 @@ COPY /Y "%SRC%\TemplateTable.dll*" %DST%
 COPY /Y "%SRC_JSON%\TemplateTable.Json.dll*" %DST%
 COPY /Y "%SRC_PROTOBUF%\TemplateTable.Protobuf.dll*" %DST%
 
+REM Remove public token of referenced Newtonsoft.Json from TemplateTable.Json.dll
+..\..\tools\sfk\sfk.exe rep %DST%\TemplateTable.Json.dll -pat -bin /0830ad4fe6b2a6aeed/000000000000000000/ -yes
+
 popd
