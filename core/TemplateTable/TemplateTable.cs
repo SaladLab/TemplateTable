@@ -33,7 +33,7 @@ namespace TemplateTable
         {
             ValueData data;
             if (_table.TryGetValue(id, out data) == false)
-                return null;
+                return default(TValue);
 
             return data.Value ?? LoadLazyValue(id, data);
         }
