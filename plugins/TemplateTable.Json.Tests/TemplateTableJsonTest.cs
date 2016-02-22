@@ -33,25 +33,38 @@ namespace TemplateTable.Tests
         }
 
         [Fact]
-        public void Test_JsonPatchNow()
+        public void Test_JsonPatchLoad()
         {
             var table = new TemplateTable<int, TestObject>();
             var jsonLoader = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.LoadJson, false);
             table.Load(jsonLoader);
-            var jsonPatcher = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.PatchJson, false);
+            var jsonPatcher = new TemplateTableJsonPatchLoader<int, TestObject>(table, TestObjectJson.PatchJson);
             table.Update(jsonPatcher);
+            Assert.Equal("One", table[1].Name);
+            Assert.Equal(20, table[1].Power);
+            Assert.Equal("Three", table[3].Name);
+        }
+
+        [Fact]
+        public void Test_JsonUpdateNow()
+        {
+            var table = new TemplateTable<int, TestObject>();
+            var jsonLoader = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.LoadJson, false);
+            table.Load(jsonLoader);
+            var jsonUpdater = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.UpdateJson, false);
+            table.Update(jsonUpdater);
             var value = table[2];
             Assert.Equal("TwoTwo", value.Name);
         }
 
         [Fact]
-        public void Test_JsonPatchLazy()
+        public void Test_JsonUpdateLazy()
         {
             var table = new TemplateTable<int, TestObject>();
             var jsonLoader = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.LoadJson, true);
             table.Load(jsonLoader);
-            var jsonPatcher = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.PatchJson, true);
-            table.Update(jsonPatcher);
+            var jsonUpdater = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.UpdateJson, true);
+            table.Update(jsonUpdater);
             var value = table[2];
             Assert.Equal("TwoTwo", value.Name);
         }

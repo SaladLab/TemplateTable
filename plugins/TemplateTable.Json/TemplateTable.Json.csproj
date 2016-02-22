@@ -50,6 +50,7 @@
     <Compile Include="TemplateTableBsonPackLoader.cs" />
     <Compile Include="TemplateTableBsonPackSaver.cs" />
     <Compile Include="TemplateTableJsonLoader.cs" />
+    <Compile Include="TemplateTableJsonPatchLoader.cs" />
     <Compile Include="TemplateTableJsonSaver.cs" />
   </ItemGroup>
   <ItemGroup>

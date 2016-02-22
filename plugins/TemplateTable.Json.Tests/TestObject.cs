@@ -21,9 +21,16 @@ namespace TemplateTable.Tests
             ]
         ";
 
-        public static readonly string PatchJson = @"
+        public static readonly string UpdateJson = @"
             [ 
                 { 'Id': 2, 'Name': 'TwoTwo', 'Power': 200, 'Speed': 20 },
+                { 'Id': 3, 'Name': 'Three', 'Power': 30, 'Speed': 3 },
+            ]
+        ";
+
+        public static readonly string PatchJson = @"
+            [ 
+                { 'Id': 1, 'Power': 20 },
                 { 'Id': 3, 'Name': 'Three', 'Power': 30, 'Speed': 3 },
             ]
         ";
