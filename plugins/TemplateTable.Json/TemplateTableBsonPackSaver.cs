@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Bson;
+using Newtonsoft.Json.Linq;
 
 namespace TemplateTable
 {
@@ -32,8 +35,22 @@ namespace TemplateTable
 
         public void SaveTo(TemplateTable<TKey, TValue> table, Stream stream)
         {
-            var items = table.ToList();
-            items.Sort((x, y) => x.Key.CompareTo(y.Key));
+            var itemList = table.Select(i =>
+            {
+                JToken token;
+                using (var writer = new JTokenWriter())
+                {
+                    _serializer.Serialize(writer, i.Value);
+                    token = writer.Token;
+                }
+                return new KeyValuePair<TKey, JToken>(i.Key, token);
+            });
+            SaveTo(itemList, stream);
+        }
+
+        public void SaveTo(IEnumerable<KeyValuePair<TKey, JToken>> itemList, Stream stream)
+        {
+            var items = itemList.OrderBy(i => i.Key).ToList();
 
             // signature 'TBP1' (4 bytes)
 
@@ -57,7 +74,7 @@ namespace TemplateTable
                 var ms = new MemoryStream(1024);
                 using (var writer = new BsonWriter(ms))
                 {
-                    _serializer.Serialize(writer, i.Value);
+                    i.Value.WriteTo(writer);
                 }
                 var valueBuf = ms.ToArray();
 
