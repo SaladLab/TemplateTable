@@ -52,8 +52,14 @@
     <Compile Include="..\TemplateTable.Json\StreamGenericHelper.cs">
       <Link>StreamGenericHelper.cs</Link>
     </Compile>
+    <Compile Include="..\TemplateTable.Json\TemplateTableBsonPackIO.cs">
+      <Link>TemplateTableBsonPackIO.cs</Link>
+    </Compile>
     <Compile Include="..\TemplateTable.Json\TemplateTableBsonPackLoader.cs">
       <Link>TemplateTableBsonPackLoader.cs</Link>
+    </Compile>
+    <Compile Include="..\TemplateTable.Json\TemplateTableBsonPackPatchLoader.cs">
+      <Link>TemplateTableBsonPackPatchLoader.cs</Link>
     </Compile>
     <Compile Include="..\TemplateTable.Json\TemplateTableBsonPackSaver.cs">
       <Link>TemplateTableBsonPackSaver.cs</Link>

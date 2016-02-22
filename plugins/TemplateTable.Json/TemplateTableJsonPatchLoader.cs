@@ -46,11 +46,11 @@ namespace TemplateTable
                         _serializer.Populate(reader, value);
                     else
                         value = _serializer.Deserialize<TValue>(reader);
-
-                    yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
-                        key,
-                        Tuple.Create(value, (Func<TKey, TValue>)null));
                 }
+
+                yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
+                    key,
+                    Tuple.Create(value, (Func<TKey, TValue>)null));
             }
         }
     }
