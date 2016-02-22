@@ -35,12 +35,15 @@ namespace TemplateTable
 
         private IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> LoadNow()
         {
-            var idField = typeof(TValue).GetField("Id");
+            var idGetter = GetIdGetter();
+            if (idGetter == null)
+                throw new InvalidOperationException("Cannot get getter function.");
+
             var values = _serializer.Deserialize<TValue[]>(_jsonReader);
             foreach (var value in values)
             {
                 yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
-                    (TKey)idField.GetValue(value),
+                    idGetter(value),
                     Tuple.Create(value, (Func<TKey, TValue>)null));
             }
         }
@@ -48,22 +51,39 @@ namespace TemplateTable
         private IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> LoadDelayed()
         {
             var root = JToken.ReadFrom(_jsonReader);
-            foreach (var child in root)
+            foreach (var json in root)
             {
-                if (child.Type == JTokenType.Comment)
+                if (json.Type == JTokenType.Comment)
                     continue;
 
-                var idToken = ((JObject)child).Property("Id");
+                var idToken = ((JObject)json).Property("Id");
                 if (idToken == null)
-                    throw new JsonReaderException("Id not found (Line:" + ((IJsonLineInfo)child).LineNumber + ")");
+                    throw new JsonReaderException("Id not found (Line:" + ((IJsonLineInfo)json).LineNumber + ")");
 
                 var key = idToken.Value.ToObject<TKey>();
                 yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
                     key,
                     Tuple.Create<TValue, Func<TKey, TValue>>(
                         null,
-                        _ => _serializer.Deserialize<TValue>(new JTokenReader(child))));
+                        _ => _serializer.Deserialize<TValue>(new JTokenReader(json))));
             }
+        }
+
+        private static Func<TValue, TKey> GetIdGetter()
+        {
+            var idField = typeof(TValue).GetField("Id");
+            if (idField != null)
+            {
+                return value => (TKey)idField.GetValue(value);
+            }
+
+            var idProperty = typeof(TValue).GetProperty("Id");
+            if (idProperty != null)
+            {
+                return value => (TKey)idProperty.GetValue(value, null);
+            }
+
+            return null;
         }
     }
 }
