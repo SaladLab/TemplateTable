@@ -43,7 +43,7 @@ namespace TemplateTable
             var lazyLoader = data.LazyLoader;
             if (lazyLoader != null)
             {
-                data.Value = data.LazyLoader(id);
+                data.Value = lazyLoader(id);
                 data.LazyLoader = null;
             }
             return data.Value;
