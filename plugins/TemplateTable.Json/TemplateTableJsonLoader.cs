@@ -28,12 +28,12 @@ namespace TemplateTable
             _delayedLoad = delayedLoad;
         }
 
-        public IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> Load()
+        public IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> Load()
         {
             return _delayedLoad ? LoadDelayed() : LoadNow();
         }
 
-        private IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> LoadNow()
+        private IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> LoadNow()
         {
             var idGetter = GetIdGetter();
             if (idGetter == null)
@@ -42,13 +42,13 @@ namespace TemplateTable
             var values = _serializer.Deserialize<TValue[]>(_jsonReader);
             foreach (var value in values)
             {
-                yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
+                yield return new KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>(
                     idGetter(value),
-                    Tuple.Create(value, (Func<TKey, TValue>)null));
+                    new TemplateTableLoadData<TKey, TValue>(value));
             }
         }
 
-        private IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> LoadDelayed()
+        private IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> LoadDelayed()
         {
             var root = JToken.ReadFrom(_jsonReader);
             foreach (var json in root)
@@ -61,10 +61,9 @@ namespace TemplateTable
                     throw new JsonReaderException("Id not found (Line:" + ((IJsonLineInfo)json).LineNumber + ")");
 
                 var key = idToken.Value.ToObject<TKey>();
-                yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
+                yield return new KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>(
                     key,
-                    Tuple.Create<TValue, Func<TKey, TValue>>(
-                        null,
+                    new TemplateTableLoadData<TKey, TValue>(
                         _ => _serializer.Deserialize<TValue>(new JTokenReader(json))));
             }
         }

@@ -122,10 +122,10 @@ namespace TemplateTable
             {
                 bool added;
 
-                if (i.Value.Item1 != null)
-                    added = table.TryAdd(i.Key, new ValueData { Value = i.Value.Item1 });
-                else if (i.Value.Item2 != null)
-                    added = table.TryAdd(i.Key, new ValueData { LazyLoader = i.Value.Item2 });
+                if (i.Value.Value != null)
+                    added = table.TryAdd(i.Key, new ValueData { Value = i.Value.Value });
+                else if (i.Value.LazyLoader != null)
+                    added = table.TryAdd(i.Key, new ValueData { LazyLoader = i.Value.LazyLoader });
                 else
                     throw new InvalidOperationException("Empty:" + i.Key);
 
@@ -141,13 +141,13 @@ namespace TemplateTable
         {
             foreach (var i in loader.Load())
             {
-                if (i.Value.Item1 != null)
+                if (i.Value.Value != null)
                 {
-                    _table[i.Key] = new ValueData { Value = i.Value.Item1 };
+                    _table[i.Key] = new ValueData { Value = i.Value.Value };
                 }
-                else if (i.Value.Item2 != null)
+                else if (i.Value.LazyLoader != null)
                 {
-                    _table[i.Key] = new ValueData { LazyLoader = i.Value.Item2 };
+                    _table[i.Key] = new ValueData { LazyLoader = i.Value.LazyLoader };
                 }
                 else
                 {

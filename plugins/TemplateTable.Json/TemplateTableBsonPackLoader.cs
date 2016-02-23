@@ -28,12 +28,12 @@ namespace TemplateTable
             _delayedLoad = delayLoad;
         }
 
-        public IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> Load()
+        public IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> Load()
         {
             return _delayedLoad ? LoadDelayed() : LoadNow();
         }
 
-        private IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> LoadNow()
+        private IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> LoadNow()
         {
             TKey[] keys;
             int[] valueLengths;
@@ -52,13 +52,13 @@ namespace TemplateTable
                     value = _serializer.Deserialize<TValue>(reader);
                 }
 
-                yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
+                yield return new KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>(
                     keys[i],
-                    new Tuple<TValue, Func<TKey, TValue>>(value, null));
+                    new TemplateTableLoadData<TKey, TValue>(value));
             }
         }
 
-        private IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> LoadDelayed()
+        private IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> LoadDelayed()
         {
             TKey[] keys;
             int[] valueLengths;
@@ -71,10 +71,9 @@ namespace TemplateTable
                 var ms = new MemoryStream(valueBuf, valueBufOffset, valueLengths[i]);
                 valueBufOffset += valueLengths[i];
 
-                yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
+                yield return new KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>(
                     keys[i],
-                    new Tuple<TValue, Func<TKey, TValue>>(
-                        null,
+                    new TemplateTableLoadData<TKey, TValue>(
                         _ =>
                         {
                             using (var reader = new BsonReader(ms))

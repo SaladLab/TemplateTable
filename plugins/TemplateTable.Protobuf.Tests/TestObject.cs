@@ -16,19 +16,17 @@ namespace TemplateTable.Tests
 
     public class TestObjectLoader : ITemplateTableLoader<int, TestObject>
     {
-        public IEnumerable<KeyValuePair<int, Tuple<TestObject, Func<int, TestObject>>>> Load()
+        public IEnumerable<KeyValuePair<int, TemplateTableLoadData<int, TestObject>>> Load()
         {
-            yield return new KeyValuePair<int, Tuple<TestObject, Func<int, TestObject>>>(
+            yield return new KeyValuePair<int, TemplateTableLoadData<int, TestObject>>(
                 1,
-                Tuple.Create(
-                    new TestObject { Id = 1, Name = "One", Power = 10, Speed = 1, Description = "FirstOne" },
-                    (Func<int, TestObject>)null));
+                new TemplateTableLoadData<int, TestObject>(
+                    new TestObject { Id = 1, Name = "One", Power = 10, Speed = 1, Description = "FirstOne" }));
 
-            yield return new KeyValuePair<int, Tuple<TestObject, Func<int, TestObject>>>(
+            yield return new KeyValuePair<int, TemplateTableLoadData<int, TestObject>>(
                 2,
-                Tuple.Create(
-                    new TestObject { Id = 2, Name = "Two", Power = 20, Speed = 2 },
-                    (Func<int, TestObject>)null));
+                new TemplateTableLoadData<int, TestObject>(
+                    new TestObject { Id = 2, Name = "Two", Power = 20, Speed = 2 }));
         }
     }
 }

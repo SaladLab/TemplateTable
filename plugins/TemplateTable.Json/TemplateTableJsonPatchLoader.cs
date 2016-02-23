@@ -27,7 +27,7 @@ namespace TemplateTable
             _serializer = serializer;
         }
 
-        public IEnumerable<KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>> Load()
+        public IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> Load()
         {
             foreach (var json in _patchJson)
             {
@@ -48,9 +48,9 @@ namespace TemplateTable
                         value = _serializer.Deserialize<TValue>(reader);
                 }
 
-                yield return new KeyValuePair<TKey, Tuple<TValue, Func<TKey, TValue>>>(
+                yield return new KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>(
                     key,
-                    Tuple.Create(value, (Func<TKey, TValue>)null));
+                    new TemplateTableLoadData<TKey, TValue>(value));
             }
         }
     }
