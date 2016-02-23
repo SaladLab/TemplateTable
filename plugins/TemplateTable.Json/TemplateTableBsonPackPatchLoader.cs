@@ -13,15 +13,23 @@ namespace TemplateTable
         private readonly TemplateTable<TKey, TValue> _referenceTable;
         private readonly Stream _stream;
         private readonly JsonSerializer _serializer;
+        private readonly bool _delayedLoad;
 
-        public TemplateTableBsonPackPatchLoader(TemplateTable<TKey, TValue> referenceTable, Stream stream, JsonSerializer serializer)
+        public TemplateTableBsonPackPatchLoader(TemplateTable<TKey, TValue> referenceTable,
+                                                Stream stream, JsonSerializer serializer, bool delayedLoad)
         {
             _referenceTable = referenceTable;
             _stream = stream;
             _serializer = new JsonSerializer();
+            _delayedLoad = delayedLoad;
         }
 
         public IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> Load()
+        {
+            return _delayedLoad ? LoadDelayed() : LoadNow();
+        }
+
+        public IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> LoadNow()
         {
             TKey[] keys;
             int[] valueLengths;
@@ -46,6 +54,41 @@ namespace TemplateTable
                 yield return new KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>(
                     keys[i],
                     new TemplateTableLoadData<TKey, TValue>(value));
+            }
+        }
+
+        private IEnumerable<KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>> LoadDelayed()
+        {
+            TKey[] keys;
+            int[] valueLengths;
+            byte[] valueBuf;
+            TemplateTableBsonPackIO<TKey>.LoadHeader(_stream, out keys, out valueLengths, out valueBuf);
+
+            var valueBufOffset = 0;
+            for (var i = 0; i < keys.Length; i++)
+            {
+                var ms = new MemoryStream(valueBuf, valueBufOffset, valueLengths[i]);
+                valueBufOffset += valueLengths[i];
+
+                var valueFunc = _referenceTable.TryGetFunc(keys[i]);
+                yield return new KeyValuePair<TKey, TemplateTableLoadData<TKey, TValue>>(
+                    keys[i],
+                    new TemplateTableLoadData<TKey, TValue>(_ =>
+                    {
+                        using (var reader = new BsonReader(ms))
+                        {
+                            if (valueFunc != null)
+                            {
+                                var value = valueFunc();
+                                _serializer.Populate(reader, value);
+                                return value;
+                            }
+                            else
+                            {
+                                return _serializer.Deserialize<TValue>(reader);
+                            }
+                        }
+                    }));
             }
         }
     }

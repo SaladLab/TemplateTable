@@ -38,6 +38,24 @@ namespace TemplateTable
             return data.Value ?? LoadLazyValue(id, data);
         }
 
+        public Func<TValue> TryGetFunc(TKey id)
+        {
+            ValueData data;
+            if (_table.TryGetValue(id, out data) == false)
+                return null;
+
+            if (data.Value != null)
+            {
+                var value = data.Value;
+                return () => value;
+            }
+            else
+            {
+                var lazyLoader = data.LazyLoader;
+                return () => lazyLoader(id);
+            }
+        }
+
         private TValue LoadLazyValue(TKey id, ValueData data)
         {
             var lazyLoader = data.LazyLoader;

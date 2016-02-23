@@ -38,7 +38,7 @@ namespace TemplateTable.Tests
             var table = new TemplateTable<int, TestObject>();
             var jsonLoader = new TemplateTableJsonLoader<int, TestObject>(TestObjectJson.LoadJson, false);
             table.Load(jsonLoader);
-            var jsonPatcher = new TemplateTableJsonPatchLoader<int, TestObject>(table, TestObjectJson.PatchJson);
+            var jsonPatcher = new TemplateTableJsonPatchLoader<int, TestObject>(table, TestObjectJson.PatchJson, false);
             table.Update(jsonPatcher);
             Assert.Equal("One", table[1].Name);
             Assert.Equal(20, table[1].Power);
