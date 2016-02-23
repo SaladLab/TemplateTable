@@ -20,7 +20,7 @@ namespace TemplateTable
         {
             _referenceTable = referenceTable;
             _stream = stream;
-            _serializer = new JsonSerializer();
+            _serializer = serializer;
             _delayedLoad = delayedLoad;
         }
 
