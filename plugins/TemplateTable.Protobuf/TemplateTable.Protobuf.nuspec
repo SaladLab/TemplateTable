@@ -7,11 +7,11 @@
     <authors>Esun Kim</authors>
     <owners>Esun Kim</owners>
     <description>TemplateTable.Protobuf</description>
-    <licenseUrl>https://raw.githubusercontent.com/SaladbowlCreative/TemplateTable/master/LICENSE</licenseUrl>
-    <projectUrl>https://github.com/SaladbowlCreative/TemplateTable</projectUrl>
+    <licenseUrl>https://raw.githubusercontent.com/SaladLab/TemplateTable/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/SaladLab/TemplateTable</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>@releaseNotes@</releaseNotes>
-    <copyright>Copyright © 2015 Saladbowl Creative</copyright>
+    <copyright>Copyright © 2016 SaladLab</copyright>
     <tags>trackable data</tags>
     @dependencies@
     @references@
