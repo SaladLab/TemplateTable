@@ -35,44 +35,42 @@ let decoratePackageVersion v =
     else
         v
 
-let projects = ([
-    // Core Libraries
-    {   emptyProject with
-        Name="TemplateTable";
-        Folder="./core/TemplateTable";
-    };
-    // Plugin Libraries
-    {   emptyProject with
-        Name="TemplateTable.Json";
-        Folder="./plugins/TemplateTable.Json";
-        Dependencies=[("TemplateTable", "");
-                      ("Newtonsoft.Json", "7.0.1")];
-    };
-    {   emptyProject with
-        Name="TemplateTable.Protobuf";
-        Folder="./plugins/TemplateTable.Protobuf";
-        Dependencies=[("TemplateTable", "");
-                      ("protobuf-net", "2.0.0.668")];
-    };]
-    |> List.map (fun p -> 
-        let parsedReleases =
-            File.ReadLines (p.Folder @@ (p.Name + ".Release.md"))
-            |> ReleaseNotesHelper.parseAllReleaseNotes
-        let latest = List.head parsedReleases
-        { p with AssemblyVersion = latest.AssemblyVersion;
-                 PackageVersion = decoratePackageVersion(latest.AssemblyVersion);
-                 Releases = parsedReleases }
-    ))
+let projects = 
+    ([ // Core Libraries
+       {
+         emptyProject with Name = "TemplateTable"
+                           Folder = "./core/TemplateTable" }
+       // Plugin Libraries
+       {
+         emptyProject with Name = "TemplateTable.Json"
+                           Folder = "./plugins/TemplateTable.Json"
+                           Dependencies = 
+                               [ ("TemplateTable", "")
+                                 ("Newtonsoft.Json", "") ] }
+       { emptyProject with Name = "TemplateTable.Protobuf"
+                           Folder = "./plugins/TemplateTable.Protobuf"
+                           Dependencies = 
+                               [ ("TemplateTable", "")
+                                 ("protobuf-net", "") ] } ]
+     |> List.map (fun p -> 
+            let parsedReleases = 
+                File.ReadLines(p.Folder @@ (p.Name + ".Release.md")) |> ReleaseNotesHelper.parseAllReleaseNotes
+            let latest = List.head parsedReleases
+            { p with AssemblyVersion = latest.AssemblyVersion
+                     PackageVersion = decoratePackageVersion (latest.AssemblyVersion)
+                     Releases = parsedReleases }))
 
 let project name =
     List.filter (fun p -> p.Name = name) projects |> List.head
 
-let dependencies p =
+let dependencies p deps =
     p.Dependencies |>
     List.map (fun d -> match d with 
-                       | (id, "") -> (id, (project id).PackageVersion)
+                       | (id, "") -> (id, match List.tryFind (fun (x, ver) -> x = id) deps with
+                                          | Some (_, ver) -> ver
+                                          | None -> ((project id).PackageVersion))
                        | (id, ver) -> (id, ver))
-    
+
 // ---------------------------------------------------------------------------- Variables
 
 let binDir = "bin"
@@ -124,7 +122,7 @@ Target "Test" (fun _ ->
 )
 
 Target "UnityPackage" (fun _ ->
-    Shell.Exec(".\core\UnityPackage\UpdateDll.bat")
+    Shell.Exec(".\core\UnityPackage\UpdateDll.bat") |> ignore
     Unity (Path.GetFullPath "core/UnityPackage") "-executeMethod PackageBuilder.BuildPackage"
     Unity (Path.GetFullPath "core/UnityPackage") "-executeMethod PackageBuilder.BuildPackageFull"
     (!! "core/UnityPackage/*.unitypackage") |> Seq.iter (fun p -> MoveFile binDir p)
@@ -153,12 +151,15 @@ let createNugetPackages _ =
         let isSrc f = (hasExt ".cs" f) && not (isAssemblyInfo f)
         CopyDir (workDir @@ "src") project.Folder isSrc
 
+        let packageFile = project.Folder @@ "packages.config"
+        let packageDependencies = if (fileExists packageFile) then (getDependencies packageFile) else []
+
         NuGet (fun p -> 
             {p with
                 Project = project.Name
                 OutputPath = nugetDir
                 WorkingDir = workDir
-                Dependencies = dependencies project
+                Dependencies = dependencies project packageDependencies
                 SymbolPackage = (if (project.Name.Contains("Templates")) then NugetSymbolPackage.None else NugetSymbolPackage.Nuspec)
                 Version = project.PackageVersion 
                 ReleaseNotes = (List.head project.Releases).Notes |> String.concat "\n"
