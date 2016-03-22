@@ -1,3 +1,5 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/xbn2h0704qd7orad?svg=true)](https://ci.appveyor.com/project/veblush/templatetable)
+
 # TemplateTable
 
 TemplateTable provides simple dictionary with fast-loading and dynamic-updating.
@@ -5,9 +7,9 @@ TemplateTable provides simple dictionary with fast-loading and dynamic-updating.
 #### Where can I get it?
 
 ```
-PM> Install-Package TemplateTable -pre
-PM> Install-Package TemplateTable.Json -pre
-PM> Install-Package TemplateTable.Protobuf -pre
+PM> Install-Package TemplateTable
+PM> Install-Package TemplateTable.Json
+PM> Install-Package TemplateTable.Protobuf
 ```
 
 ## Example
