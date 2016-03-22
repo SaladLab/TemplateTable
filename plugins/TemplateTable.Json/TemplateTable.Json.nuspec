@@ -9,6 +9,7 @@
     <description>TemplateTable.Json</description>
     <licenseUrl>https://raw.githubusercontent.com/SaladLab/TemplateTable/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/SaladLab/TemplateTable</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/SaladLab/TemplateTable/master/docs/Icon_64.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <releaseNotes>@releaseNotes@</releaseNotes>
     <copyright>Copyright © 2016 SaladLab</copyright>
