@@ -59,6 +59,9 @@
     <Compile Include="..\TemplateTable\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\TemplateTable\Properties\AssemblyInfoGenerated.cs">
+      <Link>Properties\AssemblyInfoGenerated.cs</Link>
+    </Compile>
     <Compile Include="..\TemplateTable\TemplateTable.cs">
       <Link>TemplateTable.cs</Link>
     </Compile>

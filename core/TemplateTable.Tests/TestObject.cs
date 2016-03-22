@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace TemplateTable.Tests
 {
@@ -24,7 +23,7 @@ namespace TemplateTable.Tests
             yield return new KeyValuePair<int, TemplateTableLoadData<int, TestObject>>(
                 2,
                 new TemplateTableLoadData<int, TestObject>(
-                    new TestObject { Id = 2, Name = "Two", Power = 20, Speed = 2}));
+                    new TestObject { Id = 2, Name = "Two", Power = 20, Speed = 2 }));
         }
     }
 }

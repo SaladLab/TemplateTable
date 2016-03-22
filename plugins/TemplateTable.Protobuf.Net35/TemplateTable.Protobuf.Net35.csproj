@@ -58,6 +58,9 @@
     <Compile Include="..\TemplateTable.Protobuf\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="..\TemplateTable.Protobuf\Properties\AssemblyInfoGenerated.cs">
+      <Link>Properties\AssemblyInfoGenerated.cs</Link>
+    </Compile>
     <Compile Include="..\TemplateTable.Protobuf\StreamGenericHelper.cs">
       <Link>StreamGenericHelper.cs</Link>
     </Compile>

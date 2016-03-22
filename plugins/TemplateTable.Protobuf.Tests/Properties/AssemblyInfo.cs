@@ -9,8 +9,8 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("SaladLab")]
-[assembly: AssemblyProduct("TemplateTable.Protobuf.Tests")]
-[assembly: AssemblyCopyright("Copyright © SaladLab 2016")]
+[assembly: AssemblyProduct("TemplateTable.Protobuf")]
+[assembly: AssemblyCopyright("Copyright © 2016 SaladLab")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9abbd6a9-5f95-442a-88db-3fc1ebf374a7")]
+[assembly: Guid("707cca4b-7a9d-4ea3-ae45-edf6fb339cbb")]
 
 // Version information for an assembly consists of the following four values:
 //
