@@ -1,4 +1,9 @@
+https://www.nuget.org/packages/TemplateTable/
+
+[![NuGet Status](http://img.shields.io/nuget/v/TemplateTable.svg?style=flat)](https://www.nuget.org/packages/TemplateTable/)
 [![Build status](https://ci.appveyor.com/api/projects/status/xbn2h0704qd7orad?svg=true)](https://ci.appveyor.com/project/veblush/templatetable)
+[![Coverage Status](https://coveralls.io/repos/github/SaladLab/TemplateTable/badge.svg?branch=master)](https://coveralls.io/github/SaladLab/TemplateTable?branch=master)
+[![Coverity Status](https://scan.coverity.com/projects/8439/badge.svg?flat=1)](https://scan.coverity.com/projects/saladlab-templatetable)
 
 # TemplateTable
 

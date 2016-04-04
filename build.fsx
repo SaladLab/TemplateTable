@@ -34,7 +34,10 @@ Target "Build" <| fun _ -> buildSolution solution
 
 Target "Test" <| fun _ -> testSolution solution
 
-Target "Cover" <| fun _ -> coverSolution solution
+Target "Cover" <| fun _ ->
+    coverSolutionWithParams 
+        (fun p -> { p with Filter = "+[TemplateTable*]* -[*.Tests]*" })
+        solution
     
 Target "Coverity" <| fun _ -> coveritySolution solution "SaladLab/TemplateTable"
 
