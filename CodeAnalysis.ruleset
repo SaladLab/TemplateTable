@@ -233,6 +233,6 @@
     <Rule Id="SA1652" Action="None" />
     <Rule Id="SX1101" Action="Error" />
     <Rule Id="SX1309" Action="Error" />
-    <Rule Id="SX1309S" Action="Error" />
+    <Rule Id="SX1309S" Action="None" />
   </Rules>
 </RuleSet>
