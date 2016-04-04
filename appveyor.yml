@@ -6,5 +6,5 @@ environment:
   COVERALLSKEY:
     secure: ltyKQr/0AkVdntEi/STHBC4zQq9JONtiBfCodLoCM5ErSiY19pabuARoFYi34EGB    
 test: off    
-deploy_script:
+build_script:
 - cmd: build.cmd ci nugetkey=%NUGETKEY% nugetpublishurl=https://www.myget.org/F/saladlab/api/v2/package nugetprerelease=%APPVEYOR_BUILD_NUMBER% coverallskey=%COVERALLSKEY%
