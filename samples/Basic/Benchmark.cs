@@ -8,7 +8,7 @@ using TemplateTable;
 
 namespace Basic
 {
-    class Benchmark
+    internal class Benchmark
     {
         private string _json;
         private byte[] _bsonPack;
@@ -88,7 +88,7 @@ namespace Basic
 
             var elapsed = sw.ElapsedMilliseconds;
             var unit = (double)elapsed / testCount;
-            Console.WriteLine($"{testName,-30} {elapsed,6} ms {unit,2} ms");
+            Console.WriteLine($"{testName, -30} {elapsed, 6} ms {unit, 2} ms");
         }
     }
 }

@@ -11,9 +11,12 @@ SET SFK=..\..\tools\sfk\sfk.exe
 %PDB2MDB% "%SRC_JSON%\TemplateTable.Json.dll"
 %PDB2MDB% "%SRC_PROTOBUF%\TemplateTable.Protobuf.dll"
 
-COPY /Y "%SRC%\TemplateTable.dll*" %DST%
-COPY /Y "%SRC_JSON%\TemplateTable.Json.dll*" %DST%
-COPY /Y "%SRC_PROTOBUF%\TemplateTable.Protobuf.dll*" %DST%
+COPY /Y "%SRC%\TemplateTable.dll" %DST%
+COPY /Y "%SRC%\TemplateTable.dll.mdb" %DST%
+COPY /Y "%SRC_JSON%\TemplateTable.Json.dll" %DST%
+COPY /Y "%SRC_JSON%\TemplateTable.Json.dll.mdb" %DST%
+COPY /Y "%SRC_PROTOBUF%\TemplateTable.Protobuf.dll" %DST%
+COPY /Y "%SRC_PROTOBUF%\TemplateTable.Protobuf.dll.mdb" %DST%
 
 REM Remove public token of referenced Newtonsoft.Json from TemplateTable.Json.dll
 %SFK% rep %DST%\TemplateTable.Json.dll -pat -bin /0830ad4fe6b2a6aeed/000000000000000000/ -yes

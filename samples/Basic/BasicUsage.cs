@@ -7,7 +7,7 @@ using TemplateTable;
 
 namespace Basic
 {
-    class BasicUsage
+    internal class BasicUsage
     {
         private TemplateTable<string, CardDescription> _cardTable;
 
