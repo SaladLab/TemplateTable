@@ -1,0 +1,27 @@
+{
+  "id": "TemplateTable",
+  "version": "1.0.0",
+  "authors": [ "Esun Kim" ],
+  "owners": [ "Esun Kim" ],
+  "description": "TemplateTable",
+  "dependencies": {
+    "NetLegacySupport": {
+      "version": ">=1.1.0",
+      "source": "github:SaladLab/NetLegacySupport"
+    },
+    "JsonNet": {
+      "version": ">=8.0.0",
+      "source": "github:SaladLab/Json.Net.Unity3D"
+    },
+    "protobuf-net": {
+      "version": "2.0.0.668",
+      "source": "nuget:net20"
+    }
+  },
+  "files": [
+    "../TemplateTable.Net35/bin/Release/TemplateTable.dll",
+    "../../plugins/TemplateTable.Json.Net35/bin/Release/TemplateTable.Json.dll",
+    "../../plugins/TemplateTable.Protobuf.Net35/bin/Release/TemplateTable.Protobuf.dll",
+    "$dependencies$"
+  ]
+}
