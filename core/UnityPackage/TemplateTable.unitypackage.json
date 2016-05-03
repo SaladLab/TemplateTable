@@ -6,11 +6,11 @@
   "description": "TemplateTable",
   "dependencies": {
     "NetLegacySupport": {
-      "version": ">=1.1.0",
+      "version": "1.*",
       "source": "github:SaladLab/NetLegacySupport"
     },
     "JsonNet": {
-      "version": ">=8.0.0",
+      "version": "8.*",
       "source": "github:SaladLab/Json.Net.Unity3D"
     },
     "protobuf-net": {
