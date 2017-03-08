@@ -32,16 +32,16 @@
     <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="NetLegacySupport.Action, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NetLegacySupport.Action.1.1.0\lib\net35\NetLegacySupport.Action.dll</HintPath>
+    <Reference Include="NetLegacySupport.Action, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b53845dedb3ed59d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NetLegacySupport.Action.1.1.1\lib\net35\NetLegacySupport.Action.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetLegacySupport.ConcurrentDictionary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NetLegacySupport.ConcurrentDictionary.1.1.0\lib\net35\NetLegacySupport.ConcurrentDictionary.dll</HintPath>
+    <Reference Include="NetLegacySupport.ConcurrentDictionary, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b53845dedb3ed59d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NetLegacySupport.ConcurrentDictionary.1.1.1\lib\net35\NetLegacySupport.ConcurrentDictionary.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="NetLegacySupport.Tuple, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\NetLegacySupport.Tuple.1.1.0\lib\net35\NetLegacySupport.Tuple.dll</HintPath>
+    <Reference Include="NetLegacySupport.Tuple, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b53845dedb3ed59d, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\NetLegacySupport.Tuple.1.1.1\lib\net35\NetLegacySupport.Tuple.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -69,7 +69,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="packages.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Analyzer Include="..\..\packages\StyleCop.Analyzers.1.0.0\analyzers\dotnet\cs\Newtonsoft.Json.dll" />
