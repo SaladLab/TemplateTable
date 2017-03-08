@@ -20,6 +20,7 @@ let solution =
                                     ("Newtonsoft.Json", "") ] }
           { emptyProject with Name = "TemplateTable.Protobuf"
                               Folder = "./plugins/TemplateTable.Protobuf"
+                              PackagePrerelease = "beta"
                               Dependencies = 
                                   [ ("TemplateTable", "")
                                     ("protobuf-net", "") ] } ]
